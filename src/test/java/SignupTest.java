@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.CheckpointPage;
+import pages.ConfirmationCodePage;
 import pages.HomeSignedOffPage;
 import pages.SignupPage;
 
@@ -43,7 +44,10 @@ public class SignupTest {
         HomeSignedOffPage homeSignedOffPage = new HomeSignedOffPage(driver);
         SignupPage signupPage = homeSignedOffPage.clickSignUp();
         signupPage.signup(firstName, lastName, email, password, male, day, month, year);
-        new CheckpointPage(driver);
-        Assert.assertTrue(driver.getCurrentUrl().contains(CheckpointPage.URL));
+        if (driver.getCurrentUrl().contains(CheckpointPage.URL))
+            Assert.assertTrue(true, "Redirected to checkpoint page");
+        else if (driver.getCurrentUrl().contains(ConfirmationCodePage.URL))
+            Assert.assertTrue(true, "Redirected to confirmation code page");
+        else Assert.fail("Neither expected pages were reached.");
     }
 }

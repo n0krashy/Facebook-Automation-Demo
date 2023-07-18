@@ -20,6 +20,7 @@ public class SignupPage {
     private final static By yearSelector = By.id("year");
     private final static By femaleSelector = By.cssSelector("input[name='sex'][value='1']");
     private final static By maleSelector = By.cssSelector("input[name='sex'][value='2']");
+    private final static String URL = "https://www.facebook.com/";
     private final WebDriver driver;
     private final WebDriverWait wait;
 
@@ -115,6 +116,11 @@ public class SignupPage {
         chooseGender(male);
         selectBirthDate(day, month, year);
         clickSignUp();
+        waitForNextPageToStartLoading();
+    }
+
+    public void waitForNextPageToStartLoading() {
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(URL)));
     }
 
     /**
